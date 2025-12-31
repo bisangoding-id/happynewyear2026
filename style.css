@@ -1,0 +1,199 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #020617;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 45px 45px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, #020617 85%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .container { 
+            text-align: center; 
+            z-index: 10; 
+            width: 100%; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        #sub-header {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            letter-spacing: 2px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 400;
+            transition: opacity 0.8s ease;
+        }
+
+        .pulse-sub {
+            animation: pulseSub 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseSub { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.45; } }
+
+        .display-wrapper {
+            position: relative;
+            height: 200px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            z-index: 5;
+        }
+
+        @media (min-height: 700px) {
+            .display-wrapper { height: 300px; }
+        }
+
+        .year-text {
+            font-size: clamp(5rem, 30vw, 15rem);
+            font-weight: 900;
+            line-height: 1;
+            position: absolute;
+            background: linear-gradient(to bottom, #f8fafc, #475569);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.12s ease;
+            z-index: 2;
+        }
+
+        #year-2025 { opacity: 1; transform: scale(1); }
+        #year-2026 { opacity: 0; transform: scale(8); filter: blur(30px); }
+
+        .hny-text {
+            opacity: 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.8rem, 10vw, 4.5rem);
+            background: linear-gradient(to right, #fbbf24, #f472b6, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: absolute;
+            top: 0; 
+            transform: translateY(-40px);
+            transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 3;
+            white-space: nowrap;
+        }
+
+        .action-zone {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            z-index: 100;
+            margin-top: 10px; 
+        }
+
+        #launch-btn {
+            padding: 12px 35px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: white;
+            background: transparent;
+            border: 1px solid #334155;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        #launch-btn:hover { background: white; color: black; border-color: white; }
+
+        #loading-area { display: none; flex-direction: column; align-items: center; }
+        
+        #sync-timer { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #3b82f6;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar { 
+            width: 250px; 
+            height: 4px; 
+            background: #1e293b; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            margin-bottom: 8px;
+        }
+        .progress-fill { width: 0%; height: 100%; background: #3b82f6; transition: width 3s linear; }
+
+        #sync-label {
+            letter-spacing: 3px; 
+            font-size: 0.7rem; 
+            color: #3b82f6; 
+            font-weight: 800; 
+            animation: pulseLabel 1s infinite;
+        }
+
+        @keyframes pulseLabel { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+        #ending-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 850px;
+            text-align: center;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .fade-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            opacity: 0;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #farewell-text { font-size: clamp(1rem, 5vw, 2.2rem); font-weight: 300; }
+        #wish-text { font-size: clamp(1rem, 5vw, 2.2rem); font-weight: 300; }
+        
+        #credit-text { 
+            font-size: clamp(1.2rem, 6vw, 2.5rem); 
+            color: #3b82f6; 
+            letter-spacing: 4px;
+            text-decoration: none;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+        }
